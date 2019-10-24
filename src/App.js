@@ -1,26 +1,72 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Layout } from 'antd';
+import { Switch, Route } from 'react-router-dom';
+import MyHeader from './components/Header';
+import MyFooter from './components/Footer';
+import MyNavLeft from './components/NavLeft';
+import Goods from './pages/Goods';
+import GoodDetail from './pages/GoodDetail'
+import Home from './pages/Home';
+import Cart from './pages/Cart';
+import Info from './pages/Info';
+// import routes from './config/menuData';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const { Header, Footer, Sider, Content } = Layout;
+
+class App extends React.Component {
+
+  render(){
+    return (
+      // <Row className="App">
+      //   <Col xs={6} sm={6} md={4} lg={3} xl={3}>
+      //     <NavLeft />
+      //   </Col>
+      //   <Col xs={18} sm={18} md={20} lg={21} xl={21}>
+      //     <Header />
+      //     <Row className="content">
+      //       {/* { this.props.children } */}
+      //       {/* <div>内容区</div> */}
+      //       {/* <Switch>
+      //         {
+      //           routes.map(route => {
+      //             return (
+      //               <route
+      //                 key={route.key}
+      //                 path={route.path}
+      //                 component={route.component}
+      //               />
+      //             );
+      //           })
+      //         }
+      //       </Switch> */}
+      //     </Row>
+      //     <Footer />
+      //   </Col>
+      // </Row>
+      <Layout>
+        <Sider>
+          <MyNavLeft />
+        </Sider>
+        <Layout>
+          <Header>
+            <MyHeader />
+          </Header>
+          <Content>
+            <Switch>
+              <Route path='/' exact component={Home} />
+              <Route path='/goods' exact component={Goods} />
+              <Route path='/goods/:id' component={GoodDetail} />
+              <Route path='/cart' component={Cart} />
+              <Route path='/info' component={Info} />
+            </Switch>
+          </Content>
+          <Footer style={{ textAlign: 'center', background: '#ccc' }}>
+            <MyFooter />
+          </Footer>
+        </Layout>
+      </Layout>
+    );
+  }
 }
 
 export default App;
