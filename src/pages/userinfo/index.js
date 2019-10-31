@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './index.less';
 
-class GoodDetail extends Component {
+class Home extends Component {
   constructor(props){
     super(props)
     this.state = {}
@@ -11,11 +11,11 @@ class GoodDetail extends Component {
 
   render() {
     return (
-      <div className="good-detail">
-        GoodDetail{this.props.match.params.id}
+      <div className="home">
+        Home
       </div>
     );
   }
 }
 
-export default GoodDetail;
+export default Home;

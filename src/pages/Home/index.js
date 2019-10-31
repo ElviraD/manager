@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './index.less';
-
+// import PicHeader from './components/picHeader'
+// import pics from '../../config/pics';
+import { Row, Col } from 'antd';
 class Home extends Component {
   constructor(props){
     super(props)
@@ -12,7 +14,14 @@ class Home extends Component {
   render() {
     return (
       <div className="home">
-        Home
+        {/* <Row>
+          <Col>
+            <PicHeader pics={pics}/>
+          </Col>
+        </Row> */}
+        <Row>
+          <Col>Welcome to Home</Col>
+        </Row>
       </div>
     );
   }

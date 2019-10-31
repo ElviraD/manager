@@ -18,6 +18,19 @@ const menuData = [
   {
     title: '个人中心',
     key: '/info'
+  },
+  {
+    title: 'Ant Design',
+    key: '/antd',
+    children: [
+      {
+        title: '按钮',
+        key: '/antd/buttons'
+      },{
+        title: '模态框',
+        key: '/antd/modals'
+      },
+    ]
   }
 ];
 export default menuData;

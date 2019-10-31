@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import goodsData from '../../config/goodsData';
 import './index.less';
 
 class Goods extends Component {
@@ -13,7 +14,13 @@ class Goods extends Component {
   render() {
     return (
       <div className="goods-list">
-        <Link to='/goods/:id'>Goods</Link>
+        {
+          goodsData.map((item,index) => {
+            return <div className='list' key={index}>
+              <Link id={item.id} to={item.schema}>Goods_{item.title}</Link>
+            </div>
+          })
+        }
       </div>
     );
   }

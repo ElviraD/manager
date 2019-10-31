@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import {  Link } from 'react-router-dom';
 import { Menu } from 'antd';
+import { connect } from 'react-redux';
 import './index.less';
 import menuData from '../../config/menuData';
+import { switchMenu } from '../../redux/actions/index'
+import { isTSEnumMember } from '@babel/types';
 const { SubMenu } = Menu;
 
-class Footer extends Component {
+class NavLeft extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -15,12 +18,40 @@ class Footer extends Component {
     }
   }
 
+  GetUrlRelativePath(){
+  　　var url = document.location.toString();
+  　　var arrUrl = url.split("//");
+  
+  　　var start = arrUrl[1].indexOf("/");
+  　　var relUrl = arrUrl[1].substring(start);//stop省略，截取从start开始到结尾的所有字符
+  
+  　　if(relUrl.indexOf("?") != -1){
+  　　　　relUrl = relUrl.split("?")[0];
+  　　}
+  　　return relUrl;
+  }
   componentDidMount() {
-    // const menuNode = this.renderMenu(menuData)
-    // this.setState({
-    //   menuNode,
-    //   currentKey: ''
-    // })
+    const key = this.GetUrlRelativePath();
+    // console.log('currentKey:',this.state.currentKey,{key});
+
+    let currentMenu = '';
+    let findMenu = menuData.find((item)=>{
+      if(item.children){
+        let itemChild = item.children.find((item1)=>{
+          return item1.key == key
+        })
+        currentMenu = itemChild;
+        return itemChild;
+      }
+      return item.key == key
+    })
+    currentMenu = currentMenu || findMenu;
+    // console.log({currentMenu});
+    const { dispatch } = this.props;
+    dispatch(switchMenu(currentMenu.title))
+    this.setState({
+      currentKey: key
+    })
   }
   renderMenu = (data) => {
     return data.map((item) => {
@@ -45,43 +76,40 @@ class Footer extends Component {
     if( key == this.state.currentKey ){
       return false;
     }
-
+    const { dispatch } = this.props;
+    dispatch(switchMenu(item.props.title))
+    // console.log(item.props.title);
     this.setState({
       currentKey: key
+    })
+  }
+  homeHandleClick = () => {
+    const { dispatch } = this.props;
+    dispatch(switchMenu('首页'))
+    this.setState({
+      currentKey: '/'
     })
   }
   render() {
     return (
       <div className="navleft">
-        <Menu theme={'dark'}
+        {/* <NavLink to="/" onClick={this.homeHandleClick}>
+          <div className="logo">
+            <img src="/assets/logo-ant.svg" alt=""/>
+            <h1>管理系统</h1>
+          </div>
+        </NavLink> */}
+        <Menu theme="dark"
               // mode="inline"
               onClick={this.handleClick}
-              // defaultOpenKeys={['/home']}
-              defaultSelectedKeys={['/']}
+              // defaultOpenKeys={['/']}
+              selectedKeys={this.state.currentKey ? [`${this.state.currentKey}`] : '[]'}
         >
-              {/* { this.state.menuNode } */}
             { this.renderMenu(menuData) }
-          {/* <Menu.Item key='sub0'>菜单一</Menu.Item>
-          <SubMenu key='sub1'
-                   title={
-                     <span>菜单二</span>
-                   }>
-            <Menu.Item key='1'>1</Menu.Item>
-            <Menu.Item key='2'>2</Menu.Item>
-            <Menu.Item key='3'>3</Menu.Item>
-          </SubMenu>
-          <SubMenu key='sub2'
-                   title={
-                     <span>菜单三</span>
-                   }>
-            <Menu.Item key='4'>4</Menu.Item>
-            <Menu.Item key='5'>5</Menu.Item>
-            <Menu.Item key='6'>6</Menu.Item>
-          </SubMenu> */}
         </Menu>
       </div>
     );
   }
 }
 
-export default Footer;
+export default connect()(NavLeft);

@@ -9,6 +9,8 @@ import GoodDetail from './pages/GoodDetail'
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Info from './pages/Info';
+import Buttons from './pages/antd/Buttons';
+import Modals from './pages/antd/Modals';
 // import routes from './config/menuData';
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -48,7 +50,7 @@ class App extends React.Component {
           <MyNavLeft />
         </Sider>
         <Layout>
-          <Header>
+          <Header style={{background: '#E4E6F0'}}>
             <MyHeader />
           </Header>
           <Content>
@@ -58,6 +60,8 @@ class App extends React.Component {
               <Route path='/goods/:id' component={GoodDetail} />
               <Route path='/cart' component={Cart} />
               <Route path='/info' component={Info} />
+              <Route path='/antd/buttons' component={Buttons} />
+              <Route path='/antd/modals' component={Modals} />
             </Switch>
           </Content>
           <Footer style={{ textAlign: 'center', background: '#ccc' }}>
